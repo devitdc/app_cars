@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container" style="max-width: 600px !important;">
+        <a href="{{ path('brand_crud_list') }}">
+            <button class="btn btn-primary rounded-1 mt-2 mb-4">
+                Retour à la liste des marques
+            </button>
+        </a>
+    </div>
+    <div class="container border rounded shadow " style="max-width: 600px !important;">
+        {{ form_start(formEdit) }}
+        <div class="row px-3 mt-2">
+            <div class="my-3">
+                <h3 class="text-sm-start text-lg-center">Profil de la marque {{ brand.name ~ ' (id : ' ~ brand.id ~ ')'}}</h3>
+            </div>
+        </div>
+        <div class="row px-3 mt-2 justify-content-center">
+            <div class="col-10 col-sm-8 col-md-8 col-lg-5 mb-2">
+                {{ form_label(formEdit.name, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.name, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+        </div>
+        <div class="row px-3 mt-2 justify-content-center">
+            <div class="col-10 col-sm-8 col-md-8 col-lg-5 mb-2">
+                {{ form_label(formEdit.status, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_errors(formEdit.status) }}
+                {{ form_widget(formEdit.status, { 'attr' : {'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+        </div>
+        <div class="text-center m-3">
+            <button class="btn btn-success px-4" type="submit" style="border-radius: 5px;">Modifier la marque</button>
+        </div>
+        {{ form_end(formEdit) }}
+        {#{{ form_end(form, { 'render_rest' : false}) }}#}
+    </div>
+
+{% endblock %}
+

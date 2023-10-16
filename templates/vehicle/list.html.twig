@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block myTitle %}{{ vehicleNumber|number_format}} véhicules disponibles à la vente{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(formSearchVehicle) }}
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-4 px-3">
+                Année
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4"></div>
+            <div class="col-sm-4 col-md-4 col-lg-2"></div>
+        </div>
+        <div class="row g-2 justify-content-center mb-4">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                {{ form_widget(formSearchVehicle.minYear, { 'attr' : {'class' : 'rounded', 'placeholder' : 'A partir de :'}}) }}
+                {{ form_errors(formSearchVehicle.minYear) }}
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                {{ form_widget(formSearchVehicle.maxYear, { 'attr' : {'class' : 'rounded', 'placeholder' : 'Jusqu\'à :'}}) }}
+                {{ form_errors(formSearchVehicle.maxYear) }}
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-2 text-start">
+                <button class="btn btn-primary rounded-1 w-100" type="submit">Rechercher</button>
+            </div>
+        </div>
+        {{ form_end(formSearchVehicle) }}
+
+        <div class="row g-4 justify-content-md-center">
+            {% for vehicle in vehicles %}
+                <div class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
+                    <div class="card border-0 shadow card-vehicle-list" >
+                        <a class="text-decoration-none" href="{{ path('vehicle_show', { 'id' : vehicle.id}) }}">
+                            <img src="{{ asset('img/uploads/' ~ vehicle.image) }}" class="img-fluid vehicle-img-list" alt="{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}">
+                        <div class="card-body " >
+                            <h4 class="card-title" >{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}</h4>
+                            <div class="card-text" >
+                                <p>
+                                    <span class="list-vehicle-spec">{{ vehicle.yearManufacture }}</span>
+                                    <span class="vertical-line">|</span>
+                                    <span class="list-vehicle-spec">{{ vehicle.mileAge|number_format(0, null, ' ') }} km</span>
+                                    <span class="vertical-line">|</span>
+                                    <span class="list-vehicle-spec">{{ vehicle.fuelType|capitalize }}</span>
+                                    <span class="vertical-line">|</span>
+                                    <span class="list-vehicle-spec">{{ vehicle.gearBoxType|capitalize }}</span>
+                                </p>
+                                <span class="badge bg-success {% if app.user and is_granted('ROLE_ADMIN') %}price-list-admin{% else %} price-list{% endif %}">
+                                    <h4>{{ vehicle.price|number_format(0, null, ' ') }} €</h4>
+                                </span>
+                                {% if app.user and is_granted('ROLE_ADMIN') %}
+                                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Modifier la voiture">
+                                        <a class="text-decoration-none" href="{{ path('vehicle_crud_edit', { 'id' : vehicle.id }) }}">
+                                            <button type="button" class="btn btn-link btn-sm btn-rounded text-warning">
+                                                EDIT
+                                            </button>
+                                        </a>
+                                    </span>
+                                    {#<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#modaledit-{{ vehicle.id }}">
+                                        Modifier
+                                    </button>
+                                    <div class="modal fade" id="modaledit-{{ vehicle.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Mis à jour de la voiture : {{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name ~ ' (id : ' ~ vehicle.id ~ ')' }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    #}{#{{ render(controller(
+                                                        'App\\Controller\\Admin\\VehicleCrudController::manage',
+                                                        {'id' : vehicle.id}))
+                                                    }}#}{#
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>#}
+                                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Supprimer le véhicule">
+                                        <button type="button" class="btn btn-link btn-sm btn-rounded text-danger" data-bs-toggle="modal" data-bs-target="#modal-{{ vehicle.id }}">
+                                            DELETE
+                                        </button>
+                                    </span>
+                                    <div class="modal fade" id="modal-{{ vehicle.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" >Voulez-vous vraiment supprimer le véhicule ?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name ~ ' : ' ~ vehicle.registrationNumber}}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary rounded-1" data-bs-dismiss="modal">Cancel</button>
+                                                    <form action="{{ path('vehicle_crud_delete', { 'id' : vehicle.id}) }}" method="POST">
+                                                        <input type="hidden" name="_method" value="delete">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('DEL' ~ vehicle.id) }}">
+                                                        <button type="submit" class="btn btn-danger rounded-1">Supprimer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="navigation">
+                {{ knp_pagination_render(vehicles) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

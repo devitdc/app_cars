@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('vendor/bootstwatch/sketchy/bootstrap.min.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/custom.css') }} ">
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-1 border-bottom-3 border-top-0 border-end-0 border-start-0 rounded-0">
+        <div class="container-fluid">
+            <a class="navbar-brand pb-3" href="{{ path('main_index') }}" >
+                <img class="img-fluid logo" src="{{ asset('img/logo/logo.png') }}" alt="Titus logo">
+            </a>
+            <div class="ms-auto user-action-sm">
+                {% if not app.user %}
+                    {#<a id="nav-link-header" class="text-decoration-none text-dark bg-white rounded-pill" href="{{ path('security_login') }}">
+                        <button class="btn btn-outline-success rounded text-secondary px-5 btn-connect" >Login</button>
+                    </a>#}
+                {%  else %}
+                    <div class="row">
+                        <div class="col-3 icon-param">
+                            {%  if app.user and is_granted('ROLE_ADMIN') %}
+                                <ul class="first-level-menu" >
+                                    <li class="nav-item" >
+                                        <a id="nav-link-header" class="nav-link" style="font-size: 18px;"><i class="fa-solid fa-gear mx-auto d-block"></i></a>
+                                        <ul class="second-level-menu ">
+                                            <li>
+                                                <a href="#">Marques</a>
+                                                <ul class="third-level-menu">
+                                                    <li>
+                                                        <a href="{{ path('brand_crud_add') }}">Ajouter</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('brand_crud_list') }}">Modifier</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Modèles</a>
+                                                <ul class="third-level-menu">
+                                                    <li><a href="{{ path('model_crud_add') }}">Ajouter</a></li>
+                                                    <li><a href="{{ path('model_crud_list') }}">Modifier</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Voitures</a>
+                                                <ul class="third-level-menu">
+                                                    <li><a href="{{ path('vehicle_crud_add') }}">Ajouter</a></li>
+                                                    <li><a href="{{ path('vehicle_list') }}">Modifier</a></li>
+                                                </ul>
+                                            </li>
+                                            <hr class="border-1 m-0">
+                                            <li>
+                                                <a href="#">Utilisateurs</a>
+                                                <ul class="third-level-menu">
+                                                    <li><a href="{{ path('user_crud_add') }}">Ajouter</a></li>
+                                                    <li><a href="{{ path('user_crud_list') }}">Modifier</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                        <div class="col-3 icon-user-sm">
+                            <a id="nav-link-header" class="text-decoration-none" href="">
+                                <i class="fa-solid fa-circle-user mx-auto d-block"></i>
+                            </a>
+                        </div>
+                        <div class="col-3 icon-logout-sm">
+                            <a id="nav-link-header" class="text-decoration-none" href="{{ path('security_logout') }}">
+                                <i class="fa-solid fa-right-from-bracket mx-auto d-block"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" ></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item " style="margin-right: 60px;">
+                        <a id="nav-link-header" class="nav-link " href="{{ path('vehicle_list') }}" style="font-size: 18px;">Acheter une voiture</a>
+                    </li>
+                    {#<li class="nav-item" style="margin-right: 60px;">
+                        <a id="nav-link-header" class="nav-link" href="{{ path('vehicle_list') }}" style="font-size: 18px;">Vendre une voiture</a>
+                    </li>#}
+                    <li class="nav-item " style="margin-right: 60px;">
+                        <a id="nav-link-header" class="nav-link " href="" style="font-size: 18px;">A propos</a>
+                    </li>
+                    <li class="nav-item " style="margin-right: 60px;">
+                        <a id="nav-link-header" class="nav-link " href="" style="font-size: 18px;">Nous contacter</a>
+                    </li>
+                </ul>
+                <div class="float-lg-end me-2 ">
+                    {% if not app.user %}
+                        <a id="nav-link-header" class="text-decoration-none text-dark bg-white rounded-pill px-4" href="{{ path('security_login') }}">
+                            <button class="btn btn-success rounded text-white px-5 btn-connect" >Login</button>
+                        </a>
+                    {%  else %}
+                        <div class="row mt-2 user-action-lg">
+                            <div class="col-6">
+                                {%  if app.user and is_granted('ROLE_ADMIN') %}
+                                    <ul class="top-level-menu" >
+                                        <li class="nav-item" >
+                                            <a id="nav-link-header" class="nav-link" style="font-size: 18px;">Configuration</a>
+                                            <ul class="second-level-menu ">
+                                                <li>
+                                                    <a href="#">Marques</a>
+                                                    <ul class="third-level-menu">
+                                                        <li>
+                                                            <a href="{{ path('brand_crud_add') }}">Ajouter</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ path('brand_crud_list') }}">Modifier</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Modèles</a>
+                                                    <ul class="third-level-menu">
+                                                        <li><a href="{{ path('model_crud_add') }}">Ajouter</a></li>
+                                                        <li><a href="{{ path('model_crud_list') }}">Modifier</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Voitures</a>
+                                                    <ul class="third-level-menu">
+                                                        <li><a href="{{ path('vehicle_crud_add') }}">Ajouter</a></li>
+                                                        <li><a href="{{ path('vehicle_list') }}">Modifier</a></li>
+                                                    </ul>
+                                                </li>
+                                                <hr class="border-1 m-0">
+                                                <li>
+                                                    <a href="#">Utilisateurs</a>
+                                                    <ul class="third-level-menu">
+                                                        <li><a href="{{ path('user_crud_add') }}">Ajouter</a></li>
+                                                        <li><a href="{{ path('user_crud_list') }}">Modifier</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="col-2 icon-user-lg d-flex align-items-center">
+                                <a id="nav-link-header" class="text-decoration-none" href="{{ path('user_crud_edit', {'id' : app.user.id}) }}">
+                                    <i class="fa-solid fa-circle-user"></i>
+                                </a>
+                            </div>
+                            <div class="col-2 icon-logout-lg d-flex align-items-center">
+                                <a id="nav-link-header" class="text-decoration-none" href="{{ path('security_logout') }}">
+                                    <i class="fa-solid fa-right-from-bracket align-middle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    {%  block carousel %}{% endblock %}
+    <div class="container">
+        <div class="m-4 text-center text-dark"><h1>{%  block myTitle %}{% endblock %}</h1></div>
+        {%  block body %}{% endblock %}
+    </div>
+    <div class="content"></div>
+{% block scripts %}
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script>
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block myTitle %}
+    {{ title }} ({{ userNumber }})
+    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Ajouter un utilisateur">
+        <a href="{{ path('user_crud_add') }}"><i class="fa-solid fa-user-plus mb-1" style="height: 0.8em;"></i></a>
+    </span>
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center d-flex justify-content-center">
+        <table class="table table-responsive table-hover align-middle" style="max-width: 800px;">
+            <thead class="table-dark">
+            <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody >
+            {% for user in users %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        {#<img
+                                src=""
+                                alt=""
+                                style="width: 45px; height: 45px"
+                                class="rounded-circle"
+                        />#}
+                        <p class="fw-bold mb-1">{{ user.firstname|capitalize }} {{ user.lastname|capitalize }}</p>
+                    </div>
+                </td>
+                <td class="" style="word-break: break-all">
+                    <p class="mb-1" >{{ user.email }}</p>
+                </td>
+                <td>
+                    {#{% for role in user.role %}
+                        {{ role.name }}<br>
+                    {% endfor %}#}
+                    {{ user.role.name }}
+                </td>
+                <td>
+                    <span class="badge {% if user.status == 'active' %}bg-success{% elseif user.status == 'pending'%}bg-warning{% else %}bg-secondary{% endif%}
+                    rounded-pill d-inline">{{ user.status |capitalize }}</span>
+                </td>
+                <td>
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Voir l'utilisateur">
+                        <button type="button" class="btn btn-link btn-sm btn-rounded text-info" data-bs-toggle="modal" data-bs-target="#modalshow-{{ user.id }}">
+                            SHOW
+                        </button>
+                    </span>
+                    <div class="modal fade" id="modalshow-{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true" >
+                        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" >Profil de l'utilisateur : {{ user.firstname ~ ' ' ~ user.lastname ~ ' (id : ' ~ user.id ~ ')' }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ render(controller('App\\Controller\\Admin\\UserCrudController::show',
+                                        { 'id' : user.id}))
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Modifier l'utilisateur">
+                        <a class="text-decoration-none" href="{{ path('user_crud_edit', { 'id' : user.id }) }}">
+                            <button type="button" class="btn btn-link btn-sm btn-rounded text-warning">
+                                EDIT
+                            </button>
+                        </a>
+                    </span>
+                    {#<span data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Modifier l'utilisateur'">
+                        <a class="text-decoration-none" href="{{ path('user_crud_edit', { 'id' : user.id }) }}">
+                            <button type="button" class="btn btn-warning rounded-3" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#modaledit-{{ user.id }}">
+                                Edit
+                            </button>
+                        </a>
+                    </span>#}
+                    {#<div class="modal fade in" id="modaledit-{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Profil de l'utilisateur : {{ user.firstname ~ ' ' ~ user.lastname ~ ' (id : ' ~ user.id ~ ')' }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ render(controller(
+                                        'App\\Controller\\Admin\\UserCrudController::edit',
+                                        {'id' : user.id}))
+                                    }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>#}
+                    {#<span data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Supprimer l'utilisateur'">
+                        <a class="text-decoration-none" href="{{ path('user_crud_delete', { 'id' : user.id }) }}">
+                            <button type="button" class="btn btn-link btn-sm btn-rounded text-danger">
+                                DELETE
+                            </button>
+                        </a>
+                    </span>#}
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Supprimer l'utilisateur">
+                        <button type="button" class="btn btn-link btn-sm btn-rounded text-danger" data-bs-toggle="modal" data-bs-target="#modal-{{ user.id }}">
+                            DELETE
+                        </button>
+                    </span>
+                    <div class="modal fade" id="modal-{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" >Voulez-vous vraiment supprimer l'utilisateur ?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ user.firstname ~ ' ' ~ user.lastname ~ ' (id : ' ~ user.id ~ ')' }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary rounded-1" data-bs-dismiss="modal">Cancel</button>
+                                    <form action="{{ path('user_crud_delete', { 'id' : user.id}) }}" method="POST">
+                                        <input type="hidden" name="_method" value="delete">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('DEL' ~ user.id) }}">
+                                        <button type="submit" class="btn btn-danger rounded-1">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(users) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{%  endblock %}
+
+{% block myTitle %}{% endblock %}
+
+{% block body %}
+    <style>
+
+        @media (min-width: 992px) {
+
+        }
+
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-lg-8 vehicle-col-name" >
+                <h1>{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}</h1>
+                <p><span class="fs-5"><i class="fa-solid fa-calendar-days text-info"></i> {{ vehicle.yearManufacture }} <span class="mx-2">|</span></span>
+                    <span class="fs-5"><i class="fa-solid fa-gauge-high text-secondary"></i> {{ vehicle.mileAge|number_format(0, '', ' ') }} km <span class="mx-2">|</span></span>
+                    <span class="fs-5"><i class="fa-solid fa-gas-pump text-warning"></i> {{ vehicle.fuelType }} <span class="mx-2">|</span></span>
+                    <span class="fs-5"><i class="fa-solid fa-location-dot"></i> Versailles (78000)</span>
+                </p>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-8 text-md-center">
+                <img class="img-fluid vehicle-img-show" src="{{ asset('img/uploads/' ~ vehicle.image) }}" alt="{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}">
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 px-4 vehicle-condition-card">
+                <div class="p-4 rounded-3 shadow vehicle-condition-card-title">
+                    <p class="text-center">Publiée il y a 20 jours</p>
+                    <p class="text-center" style="color: #f2849e; font-size: 3rem;">{{ vehicle.price|number_format(0, '', ' ') }} €</p>
+                    <p class="text-center mt-2">
+                        <img src="{{ asset('img/icons/car-check.png') }}" alt="" height="40" width="40">
+                        <span  class="vehicle-condition-card-body">Véhicule contrôlé</span>
+                    </p>
+                    <p class="text-center mt-4">
+                        <img src="{{ asset('img/icons/warranty-icon.png') }}" alt="" height="40" width="40">
+                        <span  class="vehicle-condition-card-body">Garantie 6 mois offerte</span>
+                    </p>
+                    <p class="text-center mt-4">
+                        <img src="{{ asset('img/icons/car-delivery.png') }}" alt="" height="40" width="40">
+                        <span class="vehicle-condition-card-body"> Livraison à domicile</span>
+                    </p>
+                    <div class="sidebar-btn-reservation text-center">
+                        <button class="btn btn-vehicle btn-reservation" >
+                            <i class="fa-solid fa-calendar-check me-2"></i>
+                            Réserver ce véhicule
+                        </button>
+                        <button class="btn btn-vehicle btn-contact">
+                            <i class="fa-solid fa-envelope me-2"></i>
+                            Nous contacter
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 vehicle-col-specification vehicle-table-specification">
+                        <table class="table border-bottom">
+                            <tbody>
+                            <tr>
+                                <th class="text-start" >Mise en circulation</th>
+                                <td class="text-end ">02/2021</td>
+                            </tr>
+                            <tr>
+                                <th class="text-start">Garantie</th>
+                                <td class="text-end">6 mois</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 vehicle-col-specification vehicle-table-specification">
+                        <table class="table border-bottom">
+                            <tbody>
+                            <tr >
+                                <th class="text-start">Kilométrage</th>
+                                <td class="text-end">{{ vehicle.mileAge|number_format(0, '', ' ') }} km</td>
+                            </tr>
+                            <tr>
+                                <th class="text-start">Certificat</th>
+                                <td class="text-end">Crit'air 1</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-4"></div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 vehicle-col-specification vehicle-table-specification" >
+                        <table class="table border-bottom">
+                            <tbody>
+                            <tr >
+                                <th class="text-start">Puissance</th>
+                                <td class="text-end">{{ vehicle.horsePower }} ch</td>
+                            </tr>
+                            <tr>
+                                <th class="text-start">Emission de CO2</th>
+                                <td class="text-end">95 g/km</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 vehicle-col-specification vehicle-table-specification">
+                        <table class="table border-bottom">
+                            <tbody>
+                            <tr >
+                                <th class="text-start">Energie</th>
+                                <td class="text-end">{{ vehicle.fuelType|capitalize }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-start">Boîte de vitesse</th>
+                                <td class="text-end">{{ vehicle.gearBoxType|capitalize }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-4"></div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 vehicle-col-specification vehicle-table-specification">
+                        <table class="table border-bottom">
+                            <tbody>
+                            <tr >
+                                <th class="text-start">Nombre de portes</th>
+                                <td class="text-end">{{ vehicle.doorNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-start">Etat du véhicule</th>
+                                <td class="text-end">{{ vehicle.vehicleCondition }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4 vehicle-col-specification vehicle-table-specification">
+                        <table class="table border-bottom">
+                            <tbody>
+                            <tr >
+                                <th class="text-start">Nombre de places</th>
+                                <td class="text-end">{{ vehicle.seatNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-start">Couleur</th>
+                                <td class="text-end">{{ vehicle.color|capitalize }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+{%  endblock %}

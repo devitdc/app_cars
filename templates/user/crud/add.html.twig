@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container" style="width: 90% !important;">
+        <a href="{{ path('user_crud_list') }}">
+            <button class="btn btn-primary rounded-1 mt-2 mb-4">
+                Retour à la liste des utilisateurs
+            </button>
+        </a>
+    </div>
+    <div class="container border rounded shadow" style="width: 90% !important;">
+        {{ form_start(formAdd) }}
+        <div class="row px-3 mt-2">
+            <div class="my-3">
+                <h3 class="text-sm-start text-lg-center">Ajout d'un utilisateur</h3>
+            </div>
+        </div>
+        <div class="row px-3 mt-2">
+            <div class="mb-2">
+                <h4 class="fw-bold">Informations personnelles</h4>
+            </div>
+            <div class="col-5 col-sm-6 col-md-6 col-lg-3 mb-2">
+                {{ form_label(formAdd.status, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_errors(formAdd.status) }}
+                {{ form_widget(formAdd.status, { 'attr' : { 'style' : 'border-radius: 25px !important;' }}) }}
+            </div>
+            <div class="col-8 col-sm-8 col-md-8 col-lg-5 mb-2">
+                {{ form_label(formAdd.role, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.role, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-10 col-sm-10 col-md-10 col-lg-8 mb-2">
+                {{ form_label(formAdd.email, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.email, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                 <label class="mt-1 ms-3 required" for="user_update_password_password">Password</label>
+                {{ form_widget(formAdd.password, { 'attr' : { 'class' : 'rounded', 'placeholder' : 'Password'}}) }}
+                {{ form_errors(formAdd.password) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                {{ form_label(formAdd.passwordMatch, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.passwordMatch, { 'attr' : { 'class' : 'rounded', 'placeholder' : 'Confirm password'}}) }}
+            </div>
+        </div>
+        <div class="row px-3 mt-3">
+            <div class="col-5 col-sm-5 col-md-5 col-lg-2 mb-2">
+                {{ form_label(formAdd.title, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.title, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                {{ form_label(formAdd.firstname, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.firstname, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                {{ form_label(formAdd.lastname, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.lastname, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+                {{ form_label(formAdd.address, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.address, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 mb-2">
+                {{ form_label(formAdd.postalCode, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.postalCode, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-4 mb-2">
+                {{ form_label(formAdd.city, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.city, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 mb-3">
+                {{ form_label(formAdd.phone, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formAdd.phone, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+        </div>
+        <div class="text-end pe-3 mb-4">
+            <button class="btn btn-success px-4" type="submit" style="border-radius: 5px;">Ajouter l'utilisateur</button>
+        </div>
+        {{ form_end(formAdd) }}
+        {#{{ form_end(form, { 'render_rest' : false}) }}#}
+    </div>
+
+{% endblock %}
+

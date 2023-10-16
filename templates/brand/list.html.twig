@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block myTitle %}
+    {{ title }} ({{ brandNumber }})
+    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Ajouter une marque">
+        <a href="{{ path('brand_crud_add') }}">
+            <img src="https://static.thenounproject.com/png/621382-200.png" alt="" class="mb-2" style="height: 1em;">
+        </a>
+    </span>
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center d-flex justify-content-center">
+        <table class="table table-responsive table-hover align-middle" style="max-width: 600px;">
+            <thead class="table-dark">
+            <tr>
+                <th>Brand</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody >
+            {% for brand in brands %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold mb-1">{{ brand.name|capitalize }}</p>
+                    </div>
+                </td>
+                <td>
+                    {% if brand.status == 1 %}
+                        <span class="badge bg-success rounded-pill d-inline">Active</span>
+                    {% elseif brand.status == 0 %}
+                        <span class="badge bg-secondary rounded-pill d-inline">Disable</span>
+                    {% endif%}
+                </td>
+                <td>
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Modifier la marque">
+                        <a class="text-decoration-none" href="{{ path('brand_crud_edit', { 'id' : brand.id }) }}">
+                            <button type="button" class="btn btn-link btn-sm btn-rounded text-warning">
+                                EDIT
+                            </button>
+                        </a>
+                    </span>
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Supprimer la marque">
+                        <button type="button" class="btn btn-link btn-sm btn-rounded text-danger" data-bs-toggle="modal" data-bs-target="#modal-{{ brand.id }}">
+                            DELETE
+                        </button>
+                    </span>
+                    <div class="modal fade" id="modal-{{ brand.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" >Voulez-vous vraiment supprimer la marque ?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ brand.name ~ ' (id : ' ~ brand.id ~ ')' }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary rounded-1" data-bs-dismiss="modal">Cancel</button>
+                                    <form action="{{ path('brand_crud_delete', { 'id' : brand.id}) }}" method="POST">
+                                        <input type="hidden" name="_method" value="delete">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('DEL' ~ brand.id) }}">
+                                        <button type="submit" class="btn btn-danger rounded-1">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(brands) }}
+    </div>
+{% endblock %}

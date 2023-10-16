@@ -1,0 +1,377 @@
+body {
+    background-color: transparent;
+}
+.auth-title-container, .auth-form-container, .register-container {
+    max-width: 400px;
+}
+.btn-connect:hover {
+    color: #000000!important;
+    background-color: #FFFFFF;
+}
+.btn-contact {
+    background-color: #191b28;
+    border-color: #191b28;
+    color: #fff;
+    font-size: 1.1rem !important;
+    padding: 10px 30px !important;
+    border-radius: 30px;
+}
+.btn-contact:hover {
+    background-color: #D8D8D8 !important;
+    border-color: #D8D8D8 !important;
+    color: #000000 !important;
+}
+.btn-reservation {
+    background-color: #06df86;
+    border-color: #06df86;
+    color: #191b28;
+    font-size: 1.1rem;
+    padding: 10px 15px !important;
+    border-radius: 30px;
+}
+.btn-reservation:hover {
+    background-color: #099112;
+    border-color: #099112;
+    color: #fff;
+}
+.card:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.card-vehicle-list {
+    border-radius: 20px 20px 20px 20px/25px 25px 25px 25px !important;
+}
+.carousel-currently>a>.carousel-item img {
+    height: 70%;
+    object-fit: contain;
+    border-radius: 30px !important;
+}
+.carousel-header>.carousel-item img {
+    height: 400px;
+    object-fit: cover;
+    display: flex;
+}
+.content {
+    margin: 5rem;
+}
+.first-level-menu {
+    list-style: none;
+    position: absolute;
+    transform: translateX(-60px) translateY(-1px);
+}
+.first-level-menu>li {
+    /*position: absolute;
+    float: right;*/
+    /*margin-right: 50px;*/
+    /*height: 30px;*/
+    /*width: 150px;*/
+}
+.navbar {
+    position: relative;
+    z-index: 100;
+}
+.price-list {
+    transform: translateY(-160%) translateX(0%);
+    border-radius: 30px 0 0 30px;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    width: fit-content;
+    min-width: 135px;
+}
+.price-list-admin {
+    transform: translateY(-230%) translateX(0%);
+    border-radius: 30px 0 0 30px;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    width: fit-content;
+    min-width: 135px;
+}
+.second-level-menu {
+    position: absolute;
+    top: 28px;
+    width: 150px;
+    list-style: none;
+    padding: 0;
+    margin-left: -60px;
+    display: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border: 2px solid #0a0a0a;
+}
+.second-level-menu>li {
+    position: relative;
+    height: 35px;
+    padding: 10px 0 25px 15px;
+    background: #FFFFFF;
+}
+.second-level-menu>li:hover {
+    background: #0a0a0a;
+}
+.second-level-menu>li:hover>a {
+    color: #FFFFFF;
+}
+.second-level-menu>li>a {
+    text-decoration: none;
+}
+.third-level-menu {
+    position: absolute;
+    top: 0;
+    right: -150px;
+    width: 150px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border: 2px solid #0a0a0a ;
+}
+.third-level-menu>li {
+    height: 30px;
+    padding: 8px 0 25px 15px;
+    background: #FFFFFF;
+}
+.third-level-menu>li:hover {
+    background: #E6E6E6;
+}
+.third-level-menu>li>a {
+    text-decoration: none;
+}
+.top-level-menu, .first-level-menu {
+    list-style: none;
+}
+.top-level-menu>li {
+    position: relative;
+    float: left;
+    height: 30px;
+    width: 150px;
+}
+.top-level-menu li:hover>ul, .first-level-menu li:hover>ul {
+    /* On hover, display the next level's menu */
+    display: block;
+}
+.top-level-menu .nav-item {
+    color: #0a0a0a;
+    text-decoration: none;
+}
+.vehicle-col-specification {
+     font-size: 17px;
+ }
+.vehicle-condition-card-body {
+    font-size: 1.2rem;
+}
+.vehicle-img-list {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 260px;
+    min-width: 100%;
+    object-fit: cover;
+}
+.vehicle-img-show {
+    width: 845px;
+    height: 480px;
+    object-fit: cover;
+}
+.vehicle-table-specification {
+    margin-top: -15px !important;
+}
+.vertical-line {
+    margin: 0px 1.5% 0px 1.5%;
+    color: black;
+}
+@-moz-document url-prefix() {
+    .list-vehicle-spec, .vertical-line {
+        font-weight: 300 !important;
+    }
+}
+@media (min-width: 1200px) {
+    #carousel-img-current {
+        width: 60%;
+    }
+    #form-search {
+        width: 50%;
+    }
+    .logo {
+        margin-right: 60px;
+    }
+}
+@media (max-width: 1200px){
+    #carousel-img-current {
+        width: 70%;
+    }
+    #form-search {
+        width: 60%;
+    }
+    .vehicle-condition-card {
+        padding-bottom: 20px;
+    }
+    .vehicle-img-show {
+        width: 700px;
+        object-fit: cover;
+        text-align: center;
+    }
+}
+@media (min-width: 992px) {
+    .btn-reservation {
+        margin-bottom: 20px;
+    }
+    .user-action-sm {
+        display: none;
+        visibility: hidden;
+    }
+    .vehicle-condition-card {
+        position: sticky;
+        top: 20px;
+    }
+}
+@media (max-width: 992px) {
+    .navbar-toggler {
+        color: #FFFFFF;
+    }
+    .brand-logo {
+        height: 50px;
+    }
+    .btn-connect {
+        /*padding: .3rem 1.5rem !important;
+        font-size: 0.8rem;*/
+        /*margin-right: -16px;*/
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+    #carousel-img-current {
+        width: 100%;
+    }
+    #form-search {
+         width: 75%;
+     }
+    #nav-link-header {
+        padding: 1.5rem 1.3rem 1rem !important;
+    }
+    .icon-logout-sm {
+        margin-right: 17px;
+    }
+    .icon-user-sm {
+        margin-right: 7px;
+    }
+    .img-carousel-header {
+        max-height: 300px !important;
+    }
+    .navbar-toggler-icon {
+        font-size: 1.5em;
+    }
+    .second-level-menu {
+        position: absolute;
+        top: 50px;
+        margin-left: 20px !important;
+    }
+    .second-level-menu {
+        margin-left: -110px !important;
+    }
+    .third-level-menu {
+        right: -100px !important;
+        width: 100px !important;
+    }
+    .top-level-menu {
+        margin-bottom: -15px !important;
+    }
+    .user-action-lg {
+        display: none;
+        visibility: hidden;
+    }
+    .vehicle-col-name {
+        margin-left: 10px;
+    }
+    .vehicle-col-specification {
+        margin-left: 15px;
+        width: 47%
+    }
+    .vehicle-condition-card-title {
+        border-radius: 0 !important;
+    }
+    .vehicle-condition-card {
+        padding-right: 12px !important;
+        padding-left: 13px !important;
+    }
+}
+@media (min-width: 768px) {
+    .sidebar-btn-reservation {
+        flex-direction: column;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        top: 0;
+    }
+}
+@media (max-width: 768px){
+    .btn-contact {
+        padding: 10px 40px !important;
+    }
+    .btn-search {
+        width: 100%;
+        margin: 0 !important;
+    }
+    #carousel-img-current {
+        width: 100%;
+    }
+    .sidebar-btn-reservation {
+        display: flex;
+        box-shadow: #000 0 0 11px;
+        flex-direction: row-reverse;
+        width: 100%;
+        height: 85px;
+        justify-content: space-around;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        z-index: 1001;
+    }
+    .sidebar-btn-reservation .btn-reservation {
+        bottom: 0;
+        padding: 5px;
+        white-space: initial;
+        z-index: 1001;
+    }
+    .sidebar-btn-reservation .btn-vehicle {
+        align-items: center;
+        border-radius: 0;
+        flex-direction: column-reverse;
+        font-size: 1.3rem !important;
+        justify-content: center;
+        padding: 0;
+        width: 50%;
+        display: flex !important;
+    }
+    .vehicle-condition-card {
+        padding-right: 0.8rem !important;
+        padding-left: 0.8rem !important;
+    }
+    .vehicle-col-name {
+        margin-left: 0px;
+    }
+    .vehicle-col-specification {
+        margin-left: 0;
+        width: 100%
+    }
+    .vehicle-img-show {
+        width: 500px;
+        height: 330px;
+        object-fit: cover;
+        text-align: center;
+    }
+    .vehicle-table-specification {
+        margin-top: -15px;
+    }
+}
+@media (max-width: 360px) {
+    .icon-logout-sm {
+        margin-right: 10px;
+    }
+    .logo {
+        height: 60px;
+    }
+    .navbar-toggler-icon {
+        font-size: 1.2em;
+    }
+}
+
+
+

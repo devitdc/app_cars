@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block carousel %}
+    {{ include('main/carousel.html.twig') }}
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="text-center" aria-hidden="false">
+           <a class="text-decoration-none" href="" tabindex="0">
+                <img src="{{ asset('img/logo/aston-martin.png') }}" alt="Aston Martin for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href="" tabindex="0">
+                <img src="{{ asset('img/logo/bentley.png') }}" alt="Bentley for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/bugatti.png') }}" alt="Bugatti for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/ferrari.png') }}" alt="Ferrari for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/jaguar.png') }}" alt="Jaguar for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/lamborghini.png') }}" alt="Lamborghini for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/maserati.png') }}" alt="Maserati for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/mclaren.png') }}" alt="McLaren for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/mercedes-benz.png') }}" alt="Mercedes-Benz for sale" class="brand-logo">
+            </a>
+            <a class="text-decoration-none" href=""  tabindex="0">
+                <img src="{{ asset('img/logo/porsche.png') }}" alt="Porsche for sale" class="brand-logo">
+            </a>
+        </div>
+        <div class="fs-4 text-center mx-auto m-4">
+            <p>Vous trouverez des véhicules à couper le souffle et à un prix défiant toute concurrence !</p>
+            <p>Actuellement {{ vehicleNumber }} véhicules disponibles à la vente.</p>
+        </div>
+        <form id="form-search" class="d-md-flex mx-auto " >
+            <input class="form-control me-2 mb-2 rounded" type="search" placeholder="Rechercher votre bonheur...">
+            <button class="btn btn-secondary ms-2 mb-2 rounded btn-search" type="submit">Rechercher</button>
+        </form>
+        <div id="carousel-img-current" class="carousel slide carousel-fade mx-auto d-block mt-2" data-bs-ride="carousel">
+            {#<div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel-img-current" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carousel-img-current" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carousel-img-current" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carousel-img-current" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carousel-img-current" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>#}
+            <div class="carousel-inner carousel-currently" >
+                {% for vehicle in currentlyVehicle %}
+                    <a href="{{ path('vehicle_show', { 'id' : vehicle.id}) }}">
+                        <div class="carousel-item {% if lastId == vehicle.id %}active{% endif %}" data-bs-interval="5000">
+                            <span style="color: #FFFFFF; width: 8rem; transform: translateY(55px) translateX(5px);" class="d-flex p-2 rounded-1 me-auto">
+                                <i class="fa-regular fa-star me-1 text-warning fs-3"></i>
+                                <span class="fs-4">A la une</span>
+                            </span>
+                            <img src="{{ asset('img/uploads/' ~ vehicle.image) }}" class="w-100 img-fluid" alt="{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}">
+                            <div class="carousel-caption" style="transform: translateY(40px);" >
+                                <h3 class="rounded-1 mx-auto fw-bold" >{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}</h3>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-img-current" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-img-current" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+{% endblock %}

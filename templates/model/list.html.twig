@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block myTitle %}
+    {{ title }} ({{ modelNumber }})
+    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Ajouter un modèle">
+        <a href="{{ path('model_crud_add') }}">
+            <img src="https://static.thenounproject.com/png/621382-200.png" alt="" class="mb-2" style="height: 1em;">
+        </a>
+    </span>
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center d-flex justify-content-center">
+        <table class="table table-responsive table-hover align-middle" style="max-width: 600px;">
+            <thead class="table-dark">
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody >
+            {% for model in models %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold mb-1">{{ model.brand.name|capitalize }}</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold mb-1">{{ model.name|capitalize }}</p>
+                    </div>
+                </td>
+                <td>
+                    {% if model.status == 1 %}
+                        <span class="badge bg-success rounded-pill d-inline">Active</span>
+                    {% elseif model.status == 0 %}
+                        <span class="badge bg-secondary rounded-pill d-inline">Disable</span>
+                    {% endif%}
+                </td>
+                <td>
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Modifier le modèle">
+                        <a class="text-decoration-none" href="{{ path('model_crud_edit', { 'id' : model.id }) }}">
+                            <button type="button" class="btn btn-link btn-sm btn-rounded text-warning">
+                                EDIT
+                            </button>
+                        </a>
+                    </span>
+                    <span data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Supprimer le modèle">
+                        <button type="button" class="btn btn-link btn-sm btn-rounded text-danger" data-bs-toggle="modal" data-bs-target="#modal-{{ model.id }}">
+                            DELETE
+                        </button>
+                    </span>
+                    <div class="modal fade" id="modal-{{ model.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" >Voulez-vous vraiment supprimer le modèle ?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ model.name ~ ' (id : ' ~ model.id ~ ')' }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary rounded-1" data-bs-dismiss="modal">Cancel</button>
+                                    <form action="{{ path('model_crud_delete', { 'id' : model.id}) }}" method="POST">
+                                        <input type="hidden" name="_method" value="delete">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('DEL' ~ model.id) }}">
+                                        <button type="submit" class="btn btn-danger rounded-1">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(models) }}
+    </div>
+{% endblock %}

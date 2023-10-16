@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container" style="width: 90% !important;">
+        {%  if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('user_crud_list') }}">
+                <button class="btn btn-primary rounded-1 mt-2 mb-4">
+                    Retour à la liste des utilisateurs
+                </button>
+            </a>
+        {% else %}
+        <a href="{{ path('vehicle_list') }}">
+            <button class="btn btn-primary rounded-1 mt-2 mb-4">
+                Retour à la page d'accueil
+            </button>
+        </a>
+        {% endif %}
+    </div>
+    <div class="container border rounded shadow" style="width: 90% !important;">
+        {{ form_start(formEdit) }}
+        <div class="row px-3 mt-2">
+            <div class="my-3">
+                <h3 class="text-sm-start text-lg-center">Profil de l'utilisateur {{ user.firstname ~ ' ' ~ user.lastname ~ ' (id : ' ~ user.id ~ ')'}}</h3>
+            </div>
+        </div>
+        <div class="row px-3 mt-2">
+            <div class="mb-2">
+                <h4 class="fw-bold">Informations personnelles</h4>
+            </div>
+            <div class="col-5 col-sm-6 col-md-6 col-lg-3 mb-2">
+                {{ form_label(formEdit.status, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_errors(formEdit.status) }}
+                {{ form_widget(formEdit.status, { 'attr' : {'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+            <div class="col-8 col-sm-8 col-md-8 col-lg-5 mb-2">
+                {{ form_label(formEdit.role, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.role, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-10 col-sm-10 col-md-10 col-lg-8 mb-2">
+                {{ form_label(formEdit.email, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.email, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+        </div>
+        <div class="row px-3 mt-3">
+            <div class="col-5 col-sm-5 col-md-5 col-lg-2 mb-2">
+                {{ form_label(formEdit.title, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.title, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                {{ form_label(formEdit.firstname, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.firstname, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-2">
+                {{ form_label(formEdit.lastname, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.lastname, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+                {{ form_label(formEdit.address, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.address, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 mb-2">
+                {{ form_label(formEdit.postalCode, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.postalCode, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-4 mb-2">
+                {{ form_label(formEdit.city, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.city, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 mb-3">
+                {{ form_label(formEdit.phone, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formEdit.phone, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+        </div>
+        <div class="text-end pe-3">
+            <button class="btn btn-success px-4" type="submit" style="border-radius: 5px;">Modifier le profil</button>
+        </div>
+        {{ form_end(formEdit) }}
+        {#{{ form_end(form, { 'render_rest' : false}) }}#}
+
+        {{ form_start(formPass)}}
+        <div class="row mt-5 px-3">
+            <div class="mb-2">
+                <h3>Changer le mot de passe</h3>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                {#{{ form_label(formPass.password, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}#}
+                <label class="mt-1 ms-3 required" for="user_update_password_password">Password</label>
+                {{ form_widget(formPass.password, { 'attr' : { 'class' : 'rounded', 'placeholder' : 'Nouveau mot de passe'}}) }}
+                {{ form_errors(formPass.password) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                {{ form_label(formPass.passwordMatch, '', { 'label_attr' : { 'class' : 'mt-1 ms-3'}}) }}
+                {{ form_widget(formPass.passwordMatch, { 'attr' : { 'class' : 'rounded', 'placeholder' : 'Confirmer le mot de passe'}}) }}
+            </div>
+        </div>
+        <div class="text-end pe-3 mb-4">
+            <button class="btn btn-success mb-2 px-4" type="submit" style="border-radius: 5px;">Modifier le mot de passe</button>
+        </div>
+        {{ form_end(formPass) }}
+    </div>
+
+{% endblock %}
+

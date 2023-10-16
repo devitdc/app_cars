@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="container" style="width: 90% !important;">
+        <a href="{{ path('vehicle_list') }}">
+            <button class="btn btn-primary rounded-1 mt-2 mb-4">
+                Retour à la liste des voitures
+            </button>
+        </a>
+    </div>
+    <div class="container border rounded shadow" style="width: 90% !important;">
+        {{ form_start(formEdit) }}
+        <div class="row px-3 mt-2">
+            <div class="mt-3 mb-2">
+                <h3 class="text-sm-start text-lg-center">Profil de la voiture {{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name ~ ' (id : ' ~ vehicle.id ~ ')'}}</h3>
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="mb-2">
+                <h4 class="fw-bold">Caractéristiques</h4>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-3">
+                {% if vehicle.image is not null %}
+                    <img class="img-fluid mb-2 rounded-1 shadow" src="{{ asset('img/uploads/' ~ vehicle.image) }}" alt="{{ vehicle.model.brand.name ~ ' ' ~ vehicle.model.name }}">
+                {% endif %}
+                {% if vehicle.image is null %}
+                    {{ form_label(formEdit.imageFile, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {% endif %}
+                    {{ form_widget(formEdit.imageFile, {'attr' : { 'class' : 'mb-2'}}) }}
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                        {{ form_label(formEdit.registrationNumber, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                        {{ form_widget(formEdit.registrationNumber, { 'attr' : { 'class' : 'rounded'}}) }}
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                        {{ form_label(formEdit.model, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                        {{ form_widget(formEdit.model, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                        {{ form_label(formEdit.yearManufacture, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                        {{ form_widget(formEdit.yearManufacture, { 'attr' : { 'class' : 'rounded'}}) }}
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                        {{ form_label(formEdit.mileAge, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                        {{ form_widget(formEdit.mileAge, { 'attr' : { 'class' : 'rounded'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+                {{ form_label(formEdit.horsePower, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {{ form_widget(formEdit.horsePower, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+                {{ form_label(formEdit.fuelType, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {{ form_widget(formEdit.fuelType, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+                {{ form_label(formEdit.gearBoxType, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {{ form_widget(formEdit.gearBoxType, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 mb-2">
+                {{ form_label(formEdit.doorNumber, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {{ form_widget(formEdit.doorNumber, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 mb-2">
+                {{ form_label(formEdit.seatNumber, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {{ form_widget(formEdit.seatNumber, { 'attr' : { 'class' : 'rounded'}}) }}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+                {{ form_label(formEdit.vehicleCondition, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+                {{ form_widget(formEdit.vehicleCondition, { 'attr' : { 'style' : 'border-radius: 25px !important;'}}) }}
+            </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+            {{ form_label(formEdit.color, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+            {{ form_widget(formEdit.color, { 'attr' : { 'class' : 'rounded'}}) }}
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 mb-2">
+            {{ form_label(formEdit.price, '', { 'label_attr' : { 'class' : 'mt-1 me-2'}}) }}
+            {{ form_widget(formEdit.price, { 'attr' : { 'class' : 'rounded'}}) }}
+        </div>
+        </div>
+        <div class="text-end pe-3 mb-4 mt-3">
+            <button class="btn btn-success px-4" type="submit" style="border-radius: 5px;">Modifier la voiture</button>
+        </div>
+
+        {{ form_end(formEdit) }}
+    </div>
+
+{% endblock %}
+
