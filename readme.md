@@ -27,7 +27,7 @@ Pour vérifier qu'aucun packages ne présentent des vulnérabilités :
 symfony security:check
 ```
 
-Créer le fichier **.env** en s'appuyant du fichier **.env-template** avant d'exécuter les commandes suivantes.
+Il faut créer le fichier **.env** en s'appuyant du fichier **.env-template** avant d'exécuter les commandes suivantes.
 
 ### Pour démarrer l'environnement de développement
 
