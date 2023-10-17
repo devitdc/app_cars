@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\SearchVehicle;
 use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -49,9 +51,31 @@ class VehicleRepository extends ServiceEntityRepository
         }
     }
 
+    public function countVehicles()
+    {
+        return $this->createQueryBuilder('v')
+            ->select('count(v.id)')
+            ->join('v.model', 'm')
+            ->join('m.brand', 'b')
+            ->andWhere('b.status = 1')
+            ->andWhere('m.status = 1')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Used to list all vehicles with pagination
+     * @param SearchVehicle $searchVehicle
+     * @return Query
+     */
     public function findAllWithPagination(SearchVehicle $searchVehicle): Query
     {
         $query = $this->createQueryBuilder('v');
+
+        $query->join('v.model', 'm')
+            ->join('m.brand', 'b')
+            ->andWhere('b.status = 1')
+            ->andWhere('m.status = 1');
 
         if ($searchVehicle->getMinYear()) {
             $query->andWhere('v.yearManufacture >= :min')
@@ -65,6 +89,19 @@ class VehicleRepository extends ServiceEntityRepository
        /* $query->orderBy('v.yearManufacture');*/
 
         return $query->getQuery();
+    }
+
+    public function findVehicle(Vehicle $vehicle)
+    {
+        return $this->createQueryBuilder('v')
+            ->join('v.model', 'm')
+            ->join('m.brand', 'b')
+            ->andWhere('b.status = 1')
+            ->andWhere('m.status = 1')
+            ->andWhere('v.id = :vehicle')
+            ->setParameter('vehicle', $vehicle->getId())
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

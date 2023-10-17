@@ -31,10 +31,16 @@ doctrine-fixtures:
 	$(DOCTRINE_LOAD_FIXTURES)
 .PHONY:doctrine-fixtures
 
-start:
+start-dev:
 	$(MAKE) database-drop
 	$(MAKE) database-create
 	$(MAKE) doctrine-create-migration
 	$(MAKE) doctrine-migrate
 	$(MAKE) doctrine-fixtures
-.PHONY: start
+.PHONY: start-dev
+
+start-prod:
+	$(MAKE) database-create
+	$(MAKE) doctrine-create-migration
+	$(MAKE) doctrine-migrate
+.PHONY: start-prod
