@@ -16,25 +16,30 @@ class VehicleFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         $brand1 = new Brand();
-        $brand1->setName('Porsche');
+        $brand1->setName('Porsche')
+            ->setStatus(1);
         $manager->persist($brand1);
 
         $brand2 = new Brand();
-        $brand2->setName('Chevrolet');
+        $brand2->setName('Chevrolet')
+            ->setStatus(1);
         $manager->persist($brand2);
 
         $brand3 = new Brand();
-        $brand3->setName('Aston Martin');
+        $brand3->setName('Aston Martin')
+            ->setStatus(1);
         $manager->persist($brand3);
 
         $brand4 = new Brand();
-        $brand4->setName('Ferrari');
+        $brand4->setName('Ferrari')
+            ->setStatus(1);
         $manager->persist($brand4);
 
         $models = [911, 356, 'Corvette', 'Camaro', 'DB6', 308, '512'];
         foreach ($models as $model) {
             $newModel = new Model();
-            $newModel->setName($model);
+            $newModel->setName($model)
+                ->setStatus(1);
 
             if ($model == 911 || $model == 356) {
                 $newModel->setBrand($brand1);

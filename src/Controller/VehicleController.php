@@ -24,21 +24,7 @@ class VehicleController extends AbstractController
         $formSearchVehicle = $this->createForm(SearchVehicleType::class, $searchVehicle);
         $formSearchVehicle->handleRequest($request);
 
-        /**
-         * Requête en utilisant le QueryBuilder
-         * Compte le nombre total de voiture présent dans l'entité Vehicle
-         */
-        $vehicleNumber = $vehicleRepository->createQueryBuilder('v')
-            ->select('count(v.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        /**
-         * Requête en utilisant le langage DQL
-         * Compte le nombre total de voitures présent dans l'entité Vehicle
-         */
-        /*$vehicle = $entityManager->createQuery("SELECT COUNT(v) FROM App:Vehicle v")
-            ->getSingleScalarResult();*/
+        $vehicleNumber = $vehicleRepository->countVehicles();
 
         $vehicles = $paginator->paginate(
             $vehicleRepository->findAllWithPagination($searchVehicle),
@@ -57,10 +43,16 @@ class VehicleController extends AbstractController
     /**
      * @Route("/vehicle/{id}", name="vehicle_show")
      */
-    public function show(VehicleRepository $vehicleRepository, Vehicle $vehicle)
+    public function show(VehicleRepository $vehicleRepository, Vehicle $vehicle): Response
     {
-        return $this->render('vehicle/show.html.twig', [
-            'vehicle' => $vehicleRepository->find($vehicle)
-        ]);
+        $car = $vehicleRepository->findVehicle($vehicle);
+
+        if ($car) {
+            return $this->render('vehicle/show.html.twig', [
+                'vehicle' => $car[0]
+            ]);
+        }else {
+            return $this->redirectToRoute('vehicle_list');
+        }
     }
 }
